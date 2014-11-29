@@ -10,10 +10,11 @@ defmodule Tryelixir.Mixfile do
 
   def application do
     [mod: {Tryelixir, []},
-     applications: [:logger]]
+     applications: [:logger, :cowboy, :plug]]
   end
 
   defp deps do
-    []
+    [{:cowboy, github: "ninenines/cowboy", tag: "1.0.1", override: true},
+     {:plug, github: "elixir-lang/plug", tag: "v0.8.3"}]
   end
 end
