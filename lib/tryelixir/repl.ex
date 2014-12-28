@@ -6,9 +6,6 @@ defmodule Tryelixir.Repl do
 
   use Supervisor
 
-  @doc """
-  Starts the supervisor.
-  """
   def start_link() do
     Supervisor.start_link(__MODULE__, [], name: __MODULE__)
   end
@@ -28,12 +25,12 @@ defmodule Tryelixir.Repl do
   # Supervisor callbacks.
 
   def init([]) do
-    children = [
+    tree = [
       worker(Tryelixir.Repl.Server, [],
         restart: :transient,
         shutdown: :brutal_kill)
     ]
 
-    supervise(children, strategy: :simple_one_for_one)
+    supervise(tree, strategy: :simple_one_for_one, max_restarts: 10, max_seconds: 10)
   end
 end
